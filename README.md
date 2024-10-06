@@ -129,7 +129,7 @@ This is a Test Automation project based on `Playwright` and `TypeScript`. The te
   `npm install --save-dev --save-exact prettier`
 - configure Prettier
 
-  - exlude files in `.prettierignore`
+  - exclude files in `.prettierignore`
 
     ```
     package-lock.json
@@ -147,4 +147,4 @@ This is a Test Automation project based on `Playwright` and `TypeScript`. The te
 
 - run Prettier  
   `npx prettier --write .`
-- additionaly you can install VSC extension: **Prettier**
+- additionally you can install VSC extension: **Prettier**
