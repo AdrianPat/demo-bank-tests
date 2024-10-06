@@ -4,6 +4,7 @@ test.describe('Pulpit tests', () => {
     const url = 'https://demo-bank.vercel.app/index.html';
     const userId = 'testLOL1';
     const userPassword = 'qwer1234';
+    
     test('Quick payment with correct data', async ({ page }) => {
         // Arrange
         const receiverId = '2';

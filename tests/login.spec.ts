@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('User login to Demobank', () => {
     const url = 'https://demo-bank.vercel.app/index.html';
+    
     test('Successful login', async ({ page }) => {
         // Arrange
         const userId = 'testLOL1';
