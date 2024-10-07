@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { loginData } from '../test-data/login.data';
 
 test.describe('User login to Demobank', () => {
 
@@ -8,8 +9,8 @@ test.describe('User login to Demobank', () => {
 
     test('Successful login', async ({ page }) => {
         // Arrange
-        const userId = 'testLOL1';
-        const userPassword = 'pass1234';
+        const userId = loginData.userId;
+        const userPassword = loginData.userPassword;
         const expectedUserName = 'Jan Demobankowy';
 
         // Act
