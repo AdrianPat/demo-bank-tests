@@ -8,7 +8,7 @@ test.describe('Payment in Demobank', () => {
         await page.goto('/');
     });
 
-    test.only('Successful payment', async ({ page }) => {
+    test('Successful payment', async ({ page }) => {
         // Arrange
         const userId = loginData.userId;
         const userPassword = loginData.userPassword;
