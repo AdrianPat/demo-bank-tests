@@ -12,7 +12,8 @@ test.describe('Payment in Demobank', () => {
         await loginPage.loginInput.fill(loginData.userId);
         await loginPage.passwordInput.fill(loginData.userPassword);
         await loginPage.loginButton.click();
-        await page.getByRole('link', { name: 'płatności' }).click();
+        const pulpitPage = new PulpitPage(page);
+        await pulpitPage.sideMenu.paymentButton.click();
     });
 
     test('Successful payment', async ({ page }) => {
