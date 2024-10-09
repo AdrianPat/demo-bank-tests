@@ -9,14 +9,12 @@ test.describe('Payment in Demobank', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto('/');
         const loginPage = new LoginPage(page);
-        await loginPage.loginInput.fill(loginData.userId);
-        await loginPage.passwordInput.fill(loginData.userPassword);
-        await loginPage.loginButton.click();
+        await loginPage.login(loginData.userId, loginData.userPassword);
         const pulpitPage = new PulpitPage(page);
         await pulpitPage.sideMenu.paymentButton.click();
     });
 
-    test('Successful payment', async ({ page }) => {
+    test.only('Successful payment', async ({ page }) => {
         // Arrange
         const transferReceiver = 'Jaś';
         const transferAccount = '12 3456 7890 1234 5678 9012 34567';

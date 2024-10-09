@@ -5,8 +5,11 @@ import { PulpitPage } from '../pages/pulpit.page';
 
 test.describe('User login to Demobank', () => {
 
+    let loginPage: LoginPage;
+
     test.beforeEach(async ({ page }) => {
         await page.goto('/');
+        loginPage = new LoginPage(page);
     });
 
     test('Successful login', async ({ page }) => {
@@ -14,11 +17,7 @@ test.describe('User login to Demobank', () => {
         const expectedUserName = 'Jan Demobankowy';
 
         // Act
-        const loginPage = new LoginPage(page);
-        await loginPage.loginInput.fill(loginData.userId);
-        await loginPage.passwordInput.fill(loginData.userPassword);
-        await loginPage.loginButton.click();
-
+        await loginPage.login(loginData.userId, loginData.userPassword);
         const pulpitPage = new PulpitPage(page);
 
         // Assert
@@ -31,7 +30,6 @@ test.describe('User login to Demobank', () => {
         const loginErrorMessage = 'identyfikator ma min. 8 znaków';
 
         // Act
-        const loginPage = new LoginPage(page);
         await loginPage.loginInput.fill(tooShortUserName);
         await loginPage.loginInput.blur();
 
@@ -45,7 +43,6 @@ test.describe('User login to Demobank', () => {
         const passwordErrorMessage = 'hasło ma min. 8 znaków';
 
         // Act
-        const loginPage = new LoginPage(page);
         await loginPage.passwordInput.fill(tooShortPassword);
         await loginPage.passwordInput.blur(); // wyjście z pola („odkliknięcie”)
 
