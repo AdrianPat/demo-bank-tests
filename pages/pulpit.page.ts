@@ -18,9 +18,25 @@ export class PulpitPage {
     wykonajButton = this.page.getByRole('button', { name: 'wykonaj' });
     closeButton = this.page.getByTestId('close-button');
 
+    async quickPayment(receiverId: string, transferAmount: string, transferTitle: string): Promise<void> {
+        await this.transferReceiverInput.selectOption(receiverId);
+        await this.transferAmountInput.fill(transferAmount);
+        await this.transferTitleInput.fill(transferTitle);
+        await this.wykonajButton.click();
+        await this.closeButton.click();
+    }
+
     // Top-up section
     topUpReceiverInput = this.page.locator('#widget_1_topup_receiver');
     topUpAmountInput = this.page.locator('#widget_1_topup_amount');
     topUpAgreementCheckbox = this.page.locator('#uniform-widget_1_topup_agreement span');
     topUpButton = this.page.getByRole('button', { name: 'doładuj telefon' });
+
+    async phoneTopUp(receiverPhoneNumber: string, topUpAmount: string): Promise<void> {
+        await this.topUpReceiverInput.selectOption(receiverPhoneNumber);
+        await this.topUpAmountInput.fill(topUpAmount);
+        await this.topUpAgreementCheckbox.click();
+        await this.topUpButton.click();
+        await this.closeButton.click();
+    }
 }

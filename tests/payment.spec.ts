@@ -14,7 +14,7 @@ test.describe('Payment in Demobank', () => {
         await pulpitPage.sideMenu.paymentButton.click();
     });
 
-    test.only('Successful payment', async ({ page }) => {
+    test('Successful payment', async ({ page }) => {
         // Arrange
         const transferReceiver = 'Jaś';
         const transferAccount = '12 3456 7890 1234 5678 9012 34567';
@@ -24,12 +24,7 @@ test.describe('Payment in Demobank', () => {
 
         // Act
         const paymentPage = new PaymentPage(page);
-        await paymentPage.transferReceiverInput.fill(transferReceiver);
-        await paymentPage.transferAccountInput.fill(transferAccount);
-        await paymentPage.transferAmountInput.fill(transferAmount);
-        await paymentPage.transferTitleInput.fill(transferTitle);
-        await paymentPage.wykonajButton.click();
-        await paymentPage.closeButton.click();
+        await paymentPage.makeTransfer(transferReceiver, transferAccount, transferAmount, transferTitle);
 
         // Assert
         const pulpitPage = new PulpitPage(page);
