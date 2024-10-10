@@ -14,7 +14,7 @@ test.describe('Payment in Demobank', () => {
         await pulpitPage.sideMenu.paymentButton.click();
     });
 
-    test('Successful payment', async ({ page }) => {
+    test('Successful payment', { tag: ['@payment', '@integration'] }, async ({ page }) => {
         // Arrange
         const transferReceiver = 'Jaś';
         const transferAccount = '12 3456 7890 1234 5678 9012 34567';

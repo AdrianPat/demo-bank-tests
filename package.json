@@ -6,7 +6,8 @@
         "test": "npx playwright test",
         "test:headed": "npx playwright test --headed",
         "test:pulpit": "npm run test tests/pulpit.spec.ts",
-        "test:record": "npx playwright codegen https://demo-bank.vercel.app/"
+        "test:record": "npx playwright codegen https://demo-bank.vercel.app/",
+        "test:login": "npx playwright test --grep \"@login\""
     },
     "keywords": [],
     "author": "",

@@ -14,7 +14,7 @@ test.describe('Pulpit tests', () => {
         pulpitPage = new PulpitPage(page);
     });
 
-    test('Quick payment with correct data', async ({ page }) => {
+    test('Quick payment with correct data', { tag: ['@payment', '@integration'] }, async ({ page }) => {
         // Arrange
         const receiverId = '2';
         const transferAmount = '50';
@@ -29,7 +29,7 @@ test.describe('Pulpit tests', () => {
             `Przelew wykonany! ${expectedTransferReceiver} - ${transferAmount},00PLN - ${transferTitle}`);
     });
 
-    test('Successful phone top-up', async ({ page }) => {
+    test('Successful phone top-up', { tag: ['@payment', '@integration'] }, async ({ page }) => {
         // Arrange
         const receiverPhoneNumber = '500 xxx xxx';
         const topUpAmount = '30';
@@ -42,7 +42,7 @@ test.describe('Pulpit tests', () => {
             `Doładowanie wykonane! ${topUpAmount},00PLN na numer ${receiverPhoneNumber}`);
     });
 
-    test('Correct balance after successful phone top-up', async ({ page }) => {
+    test('Correct balance after successful phone top-up', { tag: ['@payment', '@integration'] }, async ({ page }) => {
         // Arrange
         const receiverPhoneNumber = '500 xxx xxx';
         const topUpAmount = '30';
