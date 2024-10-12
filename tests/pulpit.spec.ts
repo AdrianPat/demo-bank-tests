@@ -4,7 +4,6 @@ import { LoginPage } from '../pages/login.page';
 import { PulpitPage } from '../pages/pulpit.page';
 
 test.describe('Pulpit tests', () => {
-
     let pulpitPage: PulpitPage;
 
     test.beforeEach(async ({ page }) => {
@@ -23,7 +22,8 @@ test.describe('Pulpit tests', () => {
         await pulpitPage.quickPayment(receiverId, transferAmount, transferTitle);
 
         await expect(pulpitPage.messageText).toHaveText(
-            `Przelew wykonany! ${expectedTransferReceiver} - ${transferAmount},00PLN - ${transferTitle}`);
+            `Przelew wykonany! ${expectedTransferReceiver} - ${transferAmount},00PLN - ${transferTitle}`,
+        );
     });
 
     test('Successful phone top-up', { tag: ['@payment', '@integration'] }, async ({ page }) => {
@@ -33,7 +33,8 @@ test.describe('Pulpit tests', () => {
         await pulpitPage.phoneTopUp(receiverPhoneNumber, topUpAmount);
 
         await expect(pulpitPage.messageText).toHaveText(
-            `Doładowanie wykonane! ${topUpAmount},00PLN na numer ${receiverPhoneNumber}`);
+            `Doładowanie wykonane! ${topUpAmount},00PLN na numer ${receiverPhoneNumber}`,
+        );
     });
 
     test('Correct balance after successful phone top-up', { tag: ['@payment', '@integration'] }, async ({ page }) => {

@@ -1,8 +1,7 @@
-import { Page } from "@playwright/test";
+import { Page } from '@playwright/test';
 
 export class LoginPage {
-
-    constructor(private page: Page) { }
+    constructor(private page: Page) {}
 
     loginInput = this.page.getByTestId('login-input');
     loginError = this.page.getByTestId('error-login-id');

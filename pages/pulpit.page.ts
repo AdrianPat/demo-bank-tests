@@ -1,9 +1,8 @@
-import { Page } from "@playwright/test";
-import { SideMenuComponent } from "../components/side-menu.component";
+import { Page } from '@playwright/test';
+import { SideMenuComponent } from '../components/side-menu.component';
 
 export class PulpitPage {
-
-    constructor(private page: Page) { }
+    constructor(private page: Page) {}
 
     sideMenu = new SideMenuComponent(this.page);
 

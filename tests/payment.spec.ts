@@ -1,11 +1,10 @@
-import test, { expect } from "@playwright/test";
-import { loginData } from "../test-data/login.data";
-import { LoginPage } from "../pages/login.page";
-import { PaymentPage } from "../pages/payment.page";
-import { PulpitPage } from "../pages/pulpit.page";
+import test, { expect } from '@playwright/test';
+import { loginData } from '../test-data/login.data';
+import { LoginPage } from '../pages/login.page';
+import { PaymentPage } from '../pages/payment.page';
+import { PulpitPage } from '../pages/pulpit.page';
 
 test.describe('Payment in Demobank', () => {
-
     test.beforeEach(async ({ page }) => {
         await page.goto('/');
         const loginPage = new LoginPage(page);
