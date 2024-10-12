@@ -15,18 +15,15 @@ test.describe('Payment in Demobank', () => {
     });
 
     test('Successful payment', { tag: ['@payment', '@integration'] }, async ({ page }) => {
-        // Arrange
         const transferReceiver = 'Jaś';
         const transferAccount = '12 3456 7890 1234 5678 9012 34567';
         const transferAmount = '100';
         const transferTitle = 'Za pizzę';
         const expectedMessage = `Przelew wykonany! ${transferAmount},00PLN dla ${transferReceiver}`;
 
-        // Act
         const paymentPage = new PaymentPage(page);
         await paymentPage.makeTransfer(transferReceiver, transferAccount, transferAmount, transferTitle);
 
-        // Assert
         const pulpitPage = new PulpitPage(page);
         await expect(pulpitPage.messageText).toHaveText(expectedMessage);
     });

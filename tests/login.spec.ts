@@ -12,41 +12,38 @@ test.describe('User login to Demobank', () => {
         loginPage = new LoginPage(page);
     });
 
-    test('Successful login', { tag: ['@login', '@smoke'] }, async ({ page }) => {
-        // Arrange
+    test('Successful login', {
+        tag: ['@login', '@smoke'],
+        annotation: { type: "Type", description: "basic happy path" }
+    }, async ({ page }) => {
         const expectedUserName = 'Jan Demobankowy';
 
-        // Act
         await loginPage.login(loginData.userId, loginData.userPassword);
         const pulpitPage = new PulpitPage(page);
 
-        // Assert
         await expect(pulpitPage.userNameText).toHaveText(expectedUserName);
     });
 
-    test('Unsuccessful login with too short username', { tag: '@login' }, async ({ page }) => {
-        // Arrange
+    test('Unsuccessful login with too short username', {
+        tag: ['@login', '@unhappy_path'],
+        annotation: { type: "Documentation", description: "https://jaktestowac.pl/course/playwright-wprowadzenie/" }
+    }, async ({ page }) => {
         const tooShortUserName = 'tester';
         const loginErrorMessage = 'identyfikator ma min. 8 znaków';
 
-        // Act
         await loginPage.loginInput.fill(tooShortUserName);
         await loginPage.loginInput.blur();
 
-        // Assert
         await expect(loginPage.loginError).toHaveText(loginErrorMessage);
     });
 
-    test('Unsuccessful login with too short password', { tag: '@login' }, async ({ page }) => {
-        // Arrange
+    test('Unsuccessful login with too short password', { tag: ['@login', '@unhappy_path'], }, async ({ page }) => {
         const tooShortPassword = '1';
         const passwordErrorMessage = 'hasło ma min. 8 znaków';
 
-        // Act
         await loginPage.passwordInput.fill(tooShortPassword);
         await loginPage.passwordInput.blur(); // wyjście z pola („odkliknięcie”)
 
-        // Assert
         await expect(loginPage.passwordError).toHaveText(passwordErrorMessage);
     });
 });

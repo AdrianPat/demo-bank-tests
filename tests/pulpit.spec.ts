@@ -15,44 +15,35 @@ test.describe('Pulpit tests', () => {
     });
 
     test('Quick payment with correct data', { tag: ['@payment', '@integration'] }, async ({ page }) => {
-        // Arrange
         const receiverId = '2';
         const transferAmount = '50';
         const transferTitle = 'Pizza';
         const expectedTransferReceiver = 'Chuck Demobankowy';
 
-        // Act
         await pulpitPage.quickPayment(receiverId, transferAmount, transferTitle);
 
-        // Assert
         await expect(pulpitPage.messageText).toHaveText(
             `Przelew wykonany! ${expectedTransferReceiver} - ${transferAmount},00PLN - ${transferTitle}`);
     });
 
     test('Successful phone top-up', { tag: ['@payment', '@integration'] }, async ({ page }) => {
-        // Arrange
         const receiverPhoneNumber = '500 xxx xxx';
         const topUpAmount = '30';
 
-        // Act
         await pulpitPage.phoneTopUp(receiverPhoneNumber, topUpAmount);
 
-        // Assert
         await expect(pulpitPage.messageText).toHaveText(
             `Doładowanie wykonane! ${topUpAmount},00PLN na numer ${receiverPhoneNumber}`);
     });
 
     test('Correct balance after successful phone top-up', { tag: ['@payment', '@integration'] }, async ({ page }) => {
-        // Arrange
         const receiverPhoneNumber = '500 xxx xxx';
         const topUpAmount = '30';
         const initialBalance = await pulpitPage.moneyValue.innerText();
         const expectedBalance = Number(initialBalance) - Number(topUpAmount);
 
-        // Act
         await pulpitPage.phoneTopUp(receiverPhoneNumber, topUpAmount);
 
-        // Assert
         await expect(pulpitPage.moneyValue).toHaveText(`${expectedBalance}`);
     });
 });
