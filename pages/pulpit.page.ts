@@ -7,6 +7,7 @@ export class PulpitPage {
     sideMenu = new SideMenuComponent(this.page);
 
     userNameText = this.page.getByTestId('user-name');
+    expectedUserName = 'Jan Demobankowy';
     messageText = this.page.locator('#show_messages');
     moneyValue = this.page.locator('#money_value');
 

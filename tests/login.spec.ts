@@ -18,12 +18,9 @@ test.describe('User login to Demobank', () => {
             annotation: { type: 'Type', description: 'basic happy path' },
         },
         async ({ page }) => {
-            const expectedUserName = 'Jan Demobankowy';
-
             await loginPage.login(loginData.userId, loginData.userPassword);
             const pulpitPage = new PulpitPage(page);
-
-            await expect(pulpitPage.userNameText).toHaveText(expectedUserName);
+            await expect(pulpitPage.userNameText).toHaveText(pulpitPage.expectedUserName);
         },
     );
 
@@ -37,23 +34,15 @@ test.describe('User login to Demobank', () => {
             },
         },
         async ({ page }) => {
-            const tooShortUserName = 'tester';
-            const loginErrorMessage = 'identyfikator ma min. 8 znaków';
-
-            await loginPage.loginInput.fill(tooShortUserName);
+            await loginPage.loginInput.fill(loginData.tooShortUserName);
             await loginPage.loginInput.blur();
-
-            await expect(loginPage.loginError).toHaveText(loginErrorMessage);
+            await expect(loginPage.loginError).toHaveText(loginPage.loginErrorMessage);
         },
     );
 
     test('Unsuccessful login with too short password', { tag: ['@login', '@unhappy_path'] }, async ({ page }) => {
-        const tooShortPassword = '1';
-        const passwordErrorMessage = 'hasło ma min. 8 znaków';
-
-        await loginPage.passwordInput.fill(tooShortPassword);
-        await loginPage.passwordInput.blur(); // wyjście z pola („odkliknięcie”)
-
-        await expect(loginPage.passwordError).toHaveText(passwordErrorMessage);
+        await loginPage.passwordInput.fill(loginData.tooShortPassword);
+        await loginPage.passwordInput.blur();
+        await expect(loginPage.passwordError).toHaveText(loginPage.passwordErrorMessage);
     });
 });

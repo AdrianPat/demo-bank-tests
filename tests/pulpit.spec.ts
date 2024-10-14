@@ -2,6 +2,8 @@ import { expect, test } from '@playwright/test';
 import { loginData } from '../test-data/login.data';
 import { LoginPage } from '../pages/login.page';
 import { PulpitPage } from '../pages/pulpit.page';
+import { paymentData } from '../test-data/payment.data';
+import { topUpData } from '../test-data/top-up.data';
 
 test.describe('Pulpit tests', () => {
     let pulpitPage: PulpitPage;
@@ -14,10 +16,10 @@ test.describe('Pulpit tests', () => {
     });
 
     test('Quick payment with correct data', { tag: ['@payment', '@integration'] }, async ({ page }) => {
-        const receiverId = '2';
-        const transferAmount = '50';
-        const transferTitle = 'Pizza';
-        const expectedTransferReceiver = 'Chuck Demobankowy';
+        const receiverId = paymentData.receiverId;
+        const transferAmount = paymentData.transferAmount;
+        const transferTitle = paymentData.transferTitle;
+        const expectedTransferReceiver = paymentData.expectedTransferReceiver;
 
         await pulpitPage.quickPayment(receiverId, transferAmount, transferTitle);
 
@@ -27,23 +29,17 @@ test.describe('Pulpit tests', () => {
     });
 
     test('Successful phone top-up', { tag: ['@payment', '@integration'] }, async ({ page }) => {
-        const receiverPhoneNumber = '500 xxx xxx';
-        const topUpAmount = '30';
-
-        await pulpitPage.phoneTopUp(receiverPhoneNumber, topUpAmount);
-
+        await pulpitPage.phoneTopUp(topUpData.receiverPhoneNumber, topUpData.topUpAmount);
         await expect(pulpitPage.messageText).toHaveText(
-            `Doładowanie wykonane! ${topUpAmount},00PLN na numer ${receiverPhoneNumber}`,
+            `Doładowanie wykonane! ${topUpData.topUpAmount},00PLN na numer ${topUpData.receiverPhoneNumber}`,
         );
     });
 
     test('Correct balance after successful phone top-up', { tag: ['@payment', '@integration'] }, async ({ page }) => {
-        const receiverPhoneNumber = '500 xxx xxx';
-        const topUpAmount = '30';
         const initialBalance = await pulpitPage.moneyValue.innerText();
-        const expectedBalance = Number(initialBalance) - Number(topUpAmount);
+        const expectedBalance = Number(initialBalance) - Number(topUpData.topUpAmount);
 
-        await pulpitPage.phoneTopUp(receiverPhoneNumber, topUpAmount);
+        await pulpitPage.phoneTopUp(topUpData.receiverPhoneNumber, topUpData.topUpAmount);
 
         await expect(pulpitPage.moneyValue).toHaveText(`${expectedBalance}`);
     });
