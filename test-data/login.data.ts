@@ -4,3 +4,4 @@ export const loginData = {
     tooShortUserName: 'tester',
     tooShortPassword: '1',
 };
+// to deletion

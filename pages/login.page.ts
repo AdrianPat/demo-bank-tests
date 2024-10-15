@@ -11,6 +11,8 @@ export class LoginPage {
     passwordErrorMessage = 'hasło ma min. 8 znaków';
     loginButton = this.page.getByTestId('login-button');
 
+    requiredText = 'pole wymagane';
+
     async login(userId: string, userPassword: string): Promise<void> {
         await this.loginInput.fill(userId);
         await this.passwordInput.fill(userPassword);
