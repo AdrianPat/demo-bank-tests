@@ -3,7 +3,7 @@ import { loginData } from '../test-data/login.data';
 import { LoginPage } from '../pages/login.page';
 import { PaymentPage } from '../pages/payment.page';
 import { PulpitPage } from '../pages/pulpit.page';
-import { paymentData } from '../test-data/payment.data';
+import correctPaymentData from '../test-data/payment-correct-data.json';
 
 test.describe('Payment in Demobank', () => {
     test.beforeEach(async ({ page }) => {
@@ -14,18 +14,15 @@ test.describe('Payment in Demobank', () => {
         await pulpitPage.sideMenu.paymentButton.click();
     });
 
-    test('Successful payment', { tag: ['@payment', '@integration'] }, async ({ page }) => {
-        const transferReceiver = paymentData.transferReceiver;
-        const transferAccount = paymentData.transferAccount;
-        const transferAmount = paymentData.transferAmount;
-        const transferTitle = paymentData.transferTitle;
+    for (const d of correctPaymentData) {
+        test(`Successful payment ("${d.receiverId}")`, { tag: ['@payment', '@integration'] }, async ({ page }) => {
+            const paymentPage = new PaymentPage(page);
+            await paymentPage.makeTransfer(d.transferReceiver, d.transferAccount, d.transferAmount, d.transferTitle);
 
-        const paymentPage = new PaymentPage(page);
-        await paymentPage.makeTransfer(transferReceiver, transferAccount, transferAmount, transferTitle);
-
-        const pulpitPage = new PulpitPage(page);
-        await expect(pulpitPage.messageText).toHaveText(
-            `Przelew wykonany! ${transferAmount},00PLN dla ${transferReceiver}`,
-        );
-    });
+            const pulpitPage = new PulpitPage(page);
+            await expect(pulpitPage.messageText).toHaveText(
+                `Przelew wykonany! ${d.transferAmount},00PLN dla ${d.transferReceiver}`,
+            );
+        });
+    }
 });

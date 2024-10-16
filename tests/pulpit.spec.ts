@@ -2,8 +2,8 @@ import { expect, test } from '@playwright/test';
 import { loginData } from '../test-data/login.data';
 import { LoginPage } from '../pages/login.page';
 import { PulpitPage } from '../pages/pulpit.page';
-import { paymentData } from '../test-data/payment.data';
-import { topUpData } from '../test-data/top-up.data';
+import correctPaymentData from '../test-data/payment-correct-data.json';
+import correctTopUpData from '../test-data/top-up-correct-data.json';
 
 test.describe('Pulpit tests', () => {
     let pulpitPage: PulpitPage;
@@ -15,32 +15,44 @@ test.describe('Pulpit tests', () => {
         pulpitPage = new PulpitPage(page);
     });
 
-    test('Quick payment with correct data', { tag: ['@payment', '@integration'] }, async ({ page }) => {
-        const receiverId = paymentData.receiverId;
-        const transferAmount = paymentData.transferAmount;
-        const transferTitle = paymentData.transferTitle;
-        const expectedTransferReceiver = paymentData.expectedTransferReceiver;
-
-        await pulpitPage.quickPayment(receiverId, transferAmount, transferTitle);
-
-        await expect(pulpitPage.messageText).toHaveText(
-            `Przelew wykonany! ${expectedTransferReceiver} - ${transferAmount},00PLN - ${transferTitle}`,
+    for (const d of correctPaymentData) {
+        test(
+            `Quick payment with correct data ("${d.receiverId}")`,
+            { tag: ['@payment', '@integration'] },
+            async ({}) => {
+                await pulpitPage.quickPayment(d.receiverId, d.transferAmount, d.transferTitle);
+                await expect(pulpitPage.messageText).toHaveText(
+                    `Przelew wykonany! ${d.expectedTransferReceiver} - ${d.transferAmount},00PLN - ${d.transferTitle}`,
+                );
+            },
         );
-    });
+    }
 
-    test('Successful phone top-up', { tag: ['@payment', '@integration'] }, async ({ page }) => {
-        await pulpitPage.phoneTopUp(topUpData.receiverPhoneNumber, topUpData.topUpAmount);
-        await expect(pulpitPage.messageText).toHaveText(
-            `Doładowanie wykonane! ${topUpData.topUpAmount},00PLN na numer ${topUpData.receiverPhoneNumber}`,
+    for (const d of correctTopUpData) {
+        test(
+            `Successful phone top-up ("${d.receiverPhoneNumber}")`,
+            { tag: ['@payment', '@integration'] },
+            async ({}) => {
+                await pulpitPage.phoneTopUp(d.receiverPhoneNumber, d.topUpAmount);
+                await expect(pulpitPage.messageText).toHaveText(
+                    `Doładowanie wykonane! ${d.topUpAmount},00PLN na numer ${d.receiverPhoneNumber}`,
+                );
+            },
         );
-    });
+    }
 
-    test('Correct balance after successful phone top-up', { tag: ['@payment', '@integration'] }, async ({ page }) => {
-        const initialBalance = await pulpitPage.moneyValue.innerText();
-        const expectedBalance = Number(initialBalance) - Number(topUpData.topUpAmount);
+    for (const d of correctTopUpData) {
+        test(
+            `Correct balance after successful phone top-up ("${d.receiverPhoneNumber}")`,
+            { tag: ['@payment', '@integration'] },
+            async ({}) => {
+                const initialBalance = await pulpitPage.moneyValue.innerText();
+                const expectedBalance = Number(initialBalance) - Number(d.topUpAmount);
 
-        await pulpitPage.phoneTopUp(topUpData.receiverPhoneNumber, topUpData.topUpAmount);
+                await pulpitPage.phoneTopUp(d.receiverPhoneNumber, d.topUpAmount);
 
-        await expect(pulpitPage.moneyValue).toHaveText(`${expectedBalance}`);
-    });
+                await expect(pulpitPage.moneyValue).toHaveText(`${expectedBalance}`);
+            },
+        );
+    }
 });

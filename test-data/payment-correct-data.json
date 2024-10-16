@@ -1,0 +1,18 @@
+[
+    {
+        "receiverId": "2",
+        "transferReceiver": "Jaś",
+        "transferAccount": "12 3456 7890 1234 5678 9012 34567",
+        "transferAmount": "50",
+        "transferTitle": "Pizza",
+        "expectedTransferReceiver": "Chuck Demobankowy"
+    },
+    {
+        "receiverId": "3",
+        "transferReceiver": "Ela",
+        "transferAccount": "12 0000 1111 2222 3333 4444 5555",
+        "transferAmount": "30",
+        "transferTitle": "Za bilet do kina",
+        "expectedTransferReceiver": "Michael Scott"
+    }
+]

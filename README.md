@@ -180,10 +180,15 @@ To quickly evaluate code use `DEBUG CONSOLE`.
   - Exclude files in `.prettierignore`:
 
     ```
-    package-lock.json
+    node_modules
     playwright-report
     test-results
 
+    .gitignore
+    .prettierignore
+
+    *.html
+    *.md
     ```
 
   - Set rules in `.prettierrc.json`:

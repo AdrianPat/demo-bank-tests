@@ -1,0 +1,9 @@
+node_modules
+playwright-report
+test-results
+
+.gitignore
+.prettierignore
+
+*.html
+*.md

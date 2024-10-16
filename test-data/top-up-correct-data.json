@@ -1,0 +1,10 @@
+[
+    {
+        "receiverPhoneNumber": "500 xxx xxx",
+        "topUpAmount": "30"
+    },
+    {
+        "receiverPhoneNumber": "502 xxx xxx",
+        "topUpAmount": "50"
+    }
+]

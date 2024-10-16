@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/login.page';
 import { PulpitPage } from '../pages/pulpit.page';
-import userLoginDataSuccessful from '../test-data/login-data-s.json';
-import userLoginDataUnsuccessful from '../test-data/login-data-u.json';
+import correctLoginData from '../test-data/login-correct-data.json';
+import incorrectLoginData from '../test-data/login-incorrect-data.json';
 
 test.describe('User login to Demobank', () => {
     let loginPage: LoginPage;
@@ -12,24 +12,24 @@ test.describe('User login to Demobank', () => {
         loginPage = new LoginPage(page);
     });
 
-    for (const data of userLoginDataSuccessful) {
+    for (const d of correctLoginData) {
         test(
-            `Successful login ("${data.userId}", "${data.userPassword}")`,
+            `Successful login ("${d.userId}", "${d.userPassword}")`,
             {
                 tag: ['@login', '@smoke'],
                 annotation: { type: 'Type', description: 'basic happy path' },
             },
             async ({ page }) => {
-                await loginPage.login(data.userId, data.userPassword);
+                await loginPage.login(d.userId, d.userPassword);
                 const pulpitPage = new PulpitPage(page);
                 await expect(pulpitPage.userNameText).toHaveText(pulpitPage.expectedUserName);
             },
         );
     }
 
-    for (const data of userLoginDataUnsuccessful) {
+    for (const d of incorrectLoginData) {
         test(
-            `Unsuccessful login with too short username ("${data.userId}")`,
+            `Unsuccessful login with too short username ("${d.userId}")`,
             {
                 tag: ['@login', '@unhappy_path'],
                 annotation: {
@@ -37,20 +37,20 @@ test.describe('User login to Demobank', () => {
                     description: 'https://jaktestowac.pl/course/playwright-wprowadzenie/',
                 },
             },
-            async ({ page }) => {
-                await loginPage.loginInput.fill(data.userId);
+            async ({}) => {
+                await loginPage.loginInput.fill(d.userId);
                 await loginPage.loginInput.blur();
                 await expect(loginPage.loginError).toHaveText(loginPage.loginErrorMessage);
             },
         );
     }
 
-    for (const data of userLoginDataUnsuccessful) {
+    for (const d of incorrectLoginData) {
         test(
-            `Unsuccessful login with too short password ("${data.userPassword}")`,
+            `Unsuccessful login with too short password ("${d.userPassword}")`,
             { tag: ['@login', '@unhappy_path'] },
-            async ({ page }) => {
-                await loginPage.passwordInput.fill(data.userPassword);
+            async ({}) => {
+                await loginPage.passwordInput.fill(d.userPassword);
                 await loginPage.passwordInput.blur();
                 await expect(loginPage.passwordError).toHaveText(loginPage.passwordErrorMessage);
             },
