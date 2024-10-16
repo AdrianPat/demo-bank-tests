@@ -4,6 +4,10 @@ test-results
 
 .gitignore
 .prettierignore
+.prettierrc.json
+package-lock.json
+package.json
+playwright.config.ts
 
 *.html
 *.md

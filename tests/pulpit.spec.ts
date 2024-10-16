@@ -16,36 +16,28 @@ test.describe('Pulpit tests', () => {
     });
 
     for (const d of correctPaymentData) {
-        test(
-            `Quick payment with correct data ("${d.receiverId}")`,
-            { tag: ['@payment', '@integration'] },
-            async ({}) => {
-                await pulpitPage.quickPayment(d.receiverId, d.transferAmount, d.transferTitle);
-                await expect(pulpitPage.messageText).toHaveText(
-                    `Przelew wykonany! ${d.expectedTransferReceiver} - ${d.transferAmount},00PLN - ${d.transferTitle}`,
-                );
-            },
-        );
+        test(`Quick payment with correct data (id: ${d.id})`, { tag: ['@payment', '@integration'] }, async () => {
+            await pulpitPage.quickPayment(d.receiverId, d.transferAmount, d.transferTitle);
+            await expect(pulpitPage.messageText).toHaveText(
+                `Przelew wykonany! ${d.expectedTransferReceiver} - ${d.transferAmount},00PLN - ${d.transferTitle}`,
+            );
+        });
+    }
+
+    for (const d of correctTopUpData) {
+        test(`Successful phone top-up (id: ${d.id})`, { tag: ['@payment', '@integration'] }, async () => {
+            await pulpitPage.phoneTopUp(d.receiverPhoneNumber, d.topUpAmount);
+            await expect(pulpitPage.messageText).toHaveText(
+                `Doładowanie wykonane! ${d.topUpAmount},00PLN na numer ${d.receiverPhoneNumber}`,
+            );
+        });
     }
 
     for (const d of correctTopUpData) {
         test(
-            `Successful phone top-up ("${d.receiverPhoneNumber}")`,
+            `Correct balance after successful phone top-up (id: ${d.id})`,
             { tag: ['@payment', '@integration'] },
-            async ({}) => {
-                await pulpitPage.phoneTopUp(d.receiverPhoneNumber, d.topUpAmount);
-                await expect(pulpitPage.messageText).toHaveText(
-                    `Doładowanie wykonane! ${d.topUpAmount},00PLN na numer ${d.receiverPhoneNumber}`,
-                );
-            },
-        );
-    }
-
-    for (const d of correctTopUpData) {
-        test(
-            `Correct balance after successful phone top-up ("${d.receiverPhoneNumber}")`,
-            { tag: ['@payment', '@integration'] },
-            async ({}) => {
+            async () => {
                 const initialBalance = await pulpitPage.moneyValue.innerText();
                 const expectedBalance = Number(initialBalance) - Number(d.topUpAmount);
 

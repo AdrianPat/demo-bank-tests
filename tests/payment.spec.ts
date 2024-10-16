@@ -15,7 +15,7 @@ test.describe('Payment in Demobank', () => {
     });
 
     for (const d of correctPaymentData) {
-        test(`Successful payment ("${d.receiverId}")`, { tag: ['@payment', '@integration'] }, async ({ page }) => {
+        test(`Successful payment (id: ${d.id})`, { tag: ['@payment', '@integration'] }, async ({ page }) => {
             const paymentPage = new PaymentPage(page);
             await paymentPage.makeTransfer(d.transferReceiver, d.transferAccount, d.transferAmount, d.transferTitle);
 

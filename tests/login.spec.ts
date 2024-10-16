@@ -14,7 +14,7 @@ test.describe('User login to Demobank', () => {
 
     for (const d of correctLoginData) {
         test(
-            `Successful login ("${d.userId}", "${d.userPassword}")`,
+            `Successful login (id: ${d.id})`,
             {
                 tag: ['@login', '@smoke'],
                 annotation: { type: 'Type', description: 'basic happy path' },
@@ -29,7 +29,7 @@ test.describe('User login to Demobank', () => {
 
     for (const d of incorrectLoginData) {
         test(
-            `Unsuccessful login with too short username ("${d.userId}")`,
+            `Unsuccessful login with too short username (id: ${d.id})`,
             {
                 tag: ['@login', '@unhappy_path'],
                 annotation: {
@@ -37,7 +37,7 @@ test.describe('User login to Demobank', () => {
                     description: 'https://jaktestowac.pl/course/playwright-wprowadzenie/',
                 },
             },
-            async ({}) => {
+            async () => {
                 await loginPage.loginInput.fill(d.userId);
                 await loginPage.loginInput.blur();
                 await expect(loginPage.loginError).toHaveText(loginPage.loginErrorMessage);
@@ -47,9 +47,9 @@ test.describe('User login to Demobank', () => {
 
     for (const d of incorrectLoginData) {
         test(
-            `Unsuccessful login with too short password ("${d.userPassword}")`,
+            `Unsuccessful login with too short password (id: ${d.id})`,
             { tag: ['@login', '@unhappy_path'] },
-            async ({}) => {
+            async () => {
                 await loginPage.passwordInput.fill(d.userPassword);
                 await loginPage.passwordInput.blur();
                 await expect(loginPage.passwordError).toHaveText(loginPage.passwordErrorMessage);
@@ -57,7 +57,7 @@ test.describe('User login to Demobank', () => {
         );
     }
 
-    test('Unsuccessful login without entering data', async ({ page }) => {
+    test('Unsuccessful login without entering data', { tag: ['@login', '@unhappy_path'] }, async () => {
         await loginPage.loginInput.click();
         await loginPage.passwordInput.click();
         await loginPage.passwordInput.blur();
