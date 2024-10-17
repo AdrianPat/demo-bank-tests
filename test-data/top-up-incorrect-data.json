@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1,
+        "receiverPhoneNumber": "",
+        "topUpAmount": ""
+    },
+    {
+        "id": 2,
+        "receiverPhoneNumber": "503 xxx xxx",
+        "topUpAmount": "50,01"
+    },
+    {
+        "id": 3,
+        "receiverPhoneNumber": "",
+        "topUpAmount": "9,99"
+    }
+]

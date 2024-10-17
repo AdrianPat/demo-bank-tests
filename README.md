@@ -186,6 +186,10 @@ To quickly evaluate code use `DEBUG CONSOLE`.
 
     .gitignore
     .prettierignore
+    .prettierrc.json
+    package-lock.json
+    package.json
+    playwright.config.ts
 
     *.html
     *.md
@@ -234,7 +238,7 @@ Directory structure:
 |       +-- login.page.ts
 |       +-- ...
 |   +-- tests
-|       +-- login.spac.ts
+|       +-- login.spec.ts
 |       +-- ...
 ```
 

@@ -4,7 +4,7 @@ import { PulpitPage } from '../pages/pulpit.page';
 import correctLoginData from '../test-data/login-correct-data.json';
 import incorrectLoginData from '../test-data/login-incorrect-data.json';
 
-test.describe('User login to Demobank', () => {
+test.describe('Login', () => {
     let loginPage: LoginPage;
 
     test.beforeEach(async ({ page }) => {
@@ -14,7 +14,7 @@ test.describe('User login to Demobank', () => {
 
     for (const d of correctLoginData) {
         test(
-            `Successful login (id: ${d.id})`,
+            `Successful: with correct data (id: ${d.id})`,
             {
                 tag: ['@login', '@smoke'],
                 annotation: { type: 'Type', description: 'basic happy path' },
@@ -29,7 +29,7 @@ test.describe('User login to Demobank', () => {
 
     for (const d of incorrectLoginData) {
         test(
-            `Unsuccessful login with too short username (id: ${d.id})`,
+            `Unsuccessful: with too short username (id: ${d.id})`,
             {
                 tag: ['@login', '@unhappy_path'],
                 annotation: {
@@ -46,22 +46,18 @@ test.describe('User login to Demobank', () => {
     }
 
     for (const d of incorrectLoginData) {
-        test(
-            `Unsuccessful login with too short password (id: ${d.id})`,
-            { tag: ['@login', '@unhappy_path'] },
-            async () => {
-                await loginPage.passwordInput.fill(d.userPassword);
-                await loginPage.passwordInput.blur();
-                await expect(loginPage.passwordError).toHaveText(loginPage.passwordErrorMessage);
-            },
-        );
+        test(`Unsuccessful: with too short password (id: ${d.id})`, { tag: ['@login', '@unhappy_path'] }, async () => {
+            await loginPage.passwordInput.fill(d.userPassword);
+            await loginPage.passwordInput.blur();
+            await expect(loginPage.passwordError).toHaveText(loginPage.passwordErrorMessage);
+        });
     }
 
-    test('Unsuccessful login without entering data', { tag: ['@login', '@unhappy_path'] }, async () => {
+    test('Unsuccessful: without entering data', { tag: ['@login', '@unhappy_path'] }, async () => {
         await loginPage.loginInput.click();
         await loginPage.passwordInput.click();
         await loginPage.passwordInput.blur();
-        await expect(loginPage.loginError).toHaveText(loginPage.requiredText);
-        await expect(loginPage.passwordError).toHaveText(loginPage.requiredText);
+        await expect(loginPage.loginError).toHaveText(loginPage.requiredFieldText);
+        await expect(loginPage.passwordError).toHaveText(loginPage.requiredFieldText);
     });
 });

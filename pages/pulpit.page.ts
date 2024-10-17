@@ -28,9 +28,14 @@ export class PulpitPage {
 
     // Top-up section
     topUpReceiverInput = this.page.locator('#widget_1_topup_receiver');
+    topUpReceiverRequired = this.page.locator('#error_widget_1_topup_receiver');
     topUpAmountInput = this.page.locator('#widget_1_topup_amount');
+    topUpAmountRequired = this.page.locator('#error_widget_1_topup_amount');
     topUpAgreementCheckbox = this.page.locator('#uniform-widget_1_topup_agreement span');
+    topUpAgreementRequired = this.page.locator('#error_widget_1_topup_agreement');
     topUpButton = this.page.getByRole('button', { name: 'doładuj telefon' });
+
+    requiredFieldText = 'pole wymagane';
 
     async phoneTopUp(receiverPhoneNumber: string, topUpAmount: string): Promise<void> {
         await this.topUpReceiverInput.selectOption(receiverPhoneNumber);

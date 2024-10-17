@@ -5,7 +5,7 @@ import { PaymentPage } from '../pages/payment.page';
 import { PulpitPage } from '../pages/pulpit.page';
 import correctPaymentData from '../test-data/payment-correct-data.json';
 
-test.describe('Payment in Demobank', () => {
+test.describe('Payment', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto('/');
         const loginPage = new LoginPage(page);
@@ -15,7 +15,7 @@ test.describe('Payment in Demobank', () => {
     });
 
     for (const d of correctPaymentData) {
-        test(`Successful payment (id: ${d.id})`, { tag: ['@payment', '@integration'] }, async ({ page }) => {
+        test(`Successful: with correct data (id: ${d.id})`, { tag: ['@payment', '@integration'] }, async ({ page }) => {
             const paymentPage = new PaymentPage(page);
             await paymentPage.makeTransfer(d.transferReceiver, d.transferAccount, d.transferAmount, d.transferTitle);
 
