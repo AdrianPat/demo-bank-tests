@@ -210,6 +210,15 @@ To quickly evaluate code use `DEBUG CONSOLE`.
 - Additionally you can install VSC extension: **Prettier**
   - and set default VSC formatter as Prettier (right mouse button and `Format document with ...`)
 
+### Faker
+
+- Install Faker:  
+  `npm install @faker-js/faker --save-dev`
+- Import Faker:  
+  `import { faker } from '@faker-js/faker';`
+- Documentation:  
+  https://fakerjs.dev/guide/
+
 ### package.json — example scripts
 
 - Single command:  

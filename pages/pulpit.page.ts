@@ -7,7 +7,6 @@ export class PulpitPage {
     sideMenu = new SideMenuComponent(this.page);
 
     userNameText = this.page.getByTestId('user-name');
-    expectedUserName = 'Jan Demobankowy';
     messageText = this.page.locator('#show_messages');
     moneyValue = this.page.locator('#money_value');
 
@@ -35,7 +34,7 @@ export class PulpitPage {
     topUpAgreementRequired = this.page.locator('#error_widget_1_topup_agreement');
     topUpButton = this.page.getByRole('button', { name: 'doładuj telefon' });
 
-    requiredFieldText = 'pole wymagane';
+    // phones: string[] = ['500 xxx xxx', '502 xxx xxx', '503 xxx xxx', '504 xxx xxx'];
 
     async phoneTopUp(receiverPhoneNumber: string, topUpAmount: string): Promise<void> {
         await this.topUpReceiverInput.selectOption(receiverPhoneNumber);
@@ -43,5 +42,14 @@ export class PulpitPage {
         await this.topUpAgreementCheckbox.click();
         await this.topUpButton.click();
         await this.closeButton.click();
+    }
+
+    async tryToDoPhoneTopUp(receiverPhoneNumber: string, topUpAmount: string, topUpAgreement: boolean): Promise<void> {
+        await this.topUpReceiverInput.selectOption(receiverPhoneNumber);
+        await this.topUpAmountInput.fill(topUpAmount);
+        if (topUpAgreement == true) {
+            await this.topUpAgreementCheckbox.click();
+        }
+        await this.topUpButton.click();
     }
 }
