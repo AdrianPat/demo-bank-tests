@@ -18,4 +18,10 @@ export class LoginPage {
         await this.passwordInput.fill(userPassword);
         await this.loginButton.click();
     }
+
+    async tryToLogin(userId: string, userPassword: string): Promise<void> {
+        await this.loginInput.fill(userId);
+        await this.passwordInput.fill(userPassword);
+        await this.passwordInput.blur();
+    }
 }

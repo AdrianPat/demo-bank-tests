@@ -1,12 +1,7 @@
 [
     {
         "id": 1,
-        "userId": "testLOL1",
-        "userPassword": "pass1234"
-    },
-    {
-        "id": 2,
         "userId": "tester12",
-        "userPassword": "password"
+        "userPassword": "pass1234"
     }
 ]
