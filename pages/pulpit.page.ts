@@ -34,8 +34,6 @@ export class PulpitPage {
     topUpAgreementRequired = this.page.locator('#error_widget_1_topup_agreement');
     topUpButton = this.page.getByRole('button', { name: 'doładuj telefon' });
 
-    // phones: string[] = ['500 xxx xxx', '502 xxx xxx', '503 xxx xxx', '504 xxx xxx'];
-
     async phoneTopUp(receiverPhoneNumber: string, topUpAmount: string): Promise<void> {
         await this.topUpReceiverInput.selectOption(receiverPhoneNumber);
         await this.topUpAmountInput.fill(topUpAmount);

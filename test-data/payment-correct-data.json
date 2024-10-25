@@ -7,14 +7,5 @@
         "transferAmount": "50",
         "transferTitle": "Pizza",
         "expectedTransferReceiver": "Chuck Demobankowy"
-    },
-    {
-        "id": 2,
-        "receiverId": "3",
-        "transferReceiver": "Ela",
-        "transferAccount": "12 0000 1111 2222 3333 4444 5555",
-        "transferAmount": "30",
-        "transferTitle": "Za bilet do kina",
-        "expectedTransferReceiver": "Michael Scott"
     }
 ]

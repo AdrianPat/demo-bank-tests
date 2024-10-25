@@ -1,10 +1,10 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/login.page';
 import { PulpitPage } from '../pages/pulpit.page';
-import correctLoginData from '../test-data/login-correct-data.json';
-import incorrectLoginData from '../test-data/login-incorrect-data.json';
 import { loginData } from '../test-data/login.data';
 import { str } from '../strings/strings';
+import correctLoginData from '../test-data/login-correct-data.json';
+import incorrectLoginData from '../test-data/login-incorrect-data.json';
 
 test.describe('Login', () => {
     let loginPage: LoginPage;
@@ -17,7 +17,7 @@ test.describe('Login', () => {
     test.describe('Successful', () => {
         for (const d of correctLoginData) {
             test(
-                `With correct data (id: ${d.id})`,
+                `With correct data, id: ${d.id}`,
                 {
                     tag: ['@login', '@smoke'],
                     annotation: { type: 'Type', description: 'basic happy path' },
@@ -50,7 +50,7 @@ test.describe('Login', () => {
 
         for (const d of incorrectLoginData) {
             test(
-                `Too short username (id: ${d.id})`,
+                `Too short username, id: ${d.id}`,
                 {
                     tag: ['@login', '@unhappy_path'],
                     annotation: {
@@ -64,24 +64,24 @@ test.describe('Login', () => {
                 },
             );
 
-            test(`Too short password (id: ${d.id})`, { tag: ['@login', '@unhappy_path'] }, async () => {
+            test(`Too short password, id: ${d.id}`, { tag: ['@login', '@unhappy_path'] }, async () => {
                 await loginPage.tryToLogin(loginData.userId, d.userPassword);
                 await expect(loginPage.passwordError).toHaveText(str.passwordTooShort);
             });
 
-            test(`Too short username and password (id: ${d.id})`, { tag: ['@login', '@unhappy_path'] }, async () => {
+            test(`Too short username and password, id: ${d.id}`, { tag: ['@login', '@unhappy_path'] }, async () => {
                 await loginPage.tryToLogin(d.userId, d.userPassword);
                 await expect(loginPage.loginError).toHaveText(str.loginTooShort);
                 await expect(loginPage.passwordError).toHaveText(str.passwordTooShort);
             });
 
-            test(`Too short username and no password (id: ${d.id})`, { tag: ['@login', '@unhappy_path'] }, async () => {
+            test(`Too short username and no password, id: ${d.id}`, { tag: ['@login', '@unhappy_path'] }, async () => {
                 await loginPage.tryToLogin(d.userId, '');
                 await expect(loginPage.loginError).toHaveText(str.loginTooShort);
                 await expect(loginPage.passwordError).toHaveText(str.requiredField);
             });
 
-            test(`Too short password and no username (id: ${d.id})`, { tag: ['@login', '@unhappy_path'] }, async () => {
+            test(`Too short password and no username, id: ${d.id}`, { tag: ['@login', '@unhappy_path'] }, async () => {
                 await loginPage.tryToLogin('', d.userPassword);
                 await expect(loginPage.loginError).toHaveText(str.requiredField);
                 await expect(loginPage.passwordError).toHaveText(str.passwordTooShort);

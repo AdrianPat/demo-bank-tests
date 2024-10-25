@@ -4,7 +4,6 @@ import { LoginPage } from '../pages/login.page';
 import { PulpitPage } from '../pages/pulpit.page';
 import correctPaymentData from '../test-data/payment-correct-data.json';
 import correctTopUpData from '../test-data/top-up-correct-data.json';
-import incorrectTopUpData from '../test-data/top-up-incorrect-data.json';
 import { str } from '../strings/strings';
 import { phones } from '../test-data/top-up-phone-numbers.data';
 import { faker } from '@faker-js/faker';
