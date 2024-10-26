@@ -29,7 +29,7 @@ export class PulpitPage {
     topUpReceiverInput = this.page.locator('#widget_1_topup_receiver');
     topUpReceiverRequired = this.page.locator('#error_widget_1_topup_receiver');
     topUpAmountInput = this.page.locator('#widget_1_topup_amount');
-    topUpAmountRequired = this.page.locator('#error_widget_1_topup_amount');
+    topUpAmountError = this.page.locator('#error_widget_1_topup_amount');
     topUpAgreementCheckbox = this.page.locator('#uniform-widget_1_topup_agreement span');
     topUpAgreementRequired = this.page.locator('#error_widget_1_topup_agreement');
     topUpButton = this.page.getByRole('button', { name: 'doładuj telefon' });

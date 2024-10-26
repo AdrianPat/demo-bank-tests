@@ -6,4 +6,7 @@ export const str = {
     topUpDone: 'Doładowanie wykonane!',
     toTheNumber: 'na numer',
     paymentDone: 'Przelew wykonany!',
+    amountTooSmall: 'kwota musi być większa lub równa',
+    amountTooLarge: 'kwota musi być mniejsza lub równa',
+    amountWithoutGroszy: 'kwota musi być bez groszy',
 };
