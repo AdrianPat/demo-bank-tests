@@ -10,10 +10,13 @@ export class PulpitPage {
     messageText = this.page.locator('#show_messages');
     moneyValue = this.page.locator('#money_value');
 
-    // Payment section
+    /* Payment section */
     transferReceiverInput = this.page.locator('#widget_1_transfer_receiver');
+    transferReceiverRequired = this.page.locator('#error_widget_1_transfer_receiver');
     transferAmountInput = this.page.locator('#widget_1_transfer_amount');
+    transferAmountError = this.page.locator('#error_widget_1_transfer_amount');
     transferTitleInput = this.page.locator('#widget_1_transfer_title');
+    transferTitleRequired = this.page.locator('#error_widget_1_transfer_title');
     wykonajButton = this.page.getByRole('button', { name: 'wykonaj' });
     closeButton = this.page.getByTestId('close-button');
 
@@ -25,7 +28,14 @@ export class PulpitPage {
         await this.closeButton.click();
     }
 
-    // Top-up section
+    async tryToDoQuickPayment(receiverId: string, transferAmount: string, transferTitle: string): Promise<void> {
+        await this.transferReceiverInput.selectOption(receiverId);
+        await this.transferAmountInput.fill(transferAmount);
+        await this.transferTitleInput.fill(transferTitle);
+        await this.transferTitleInput.blur();
+    }
+
+    /* Top-up section */
     topUpReceiverInput = this.page.locator('#widget_1_topup_receiver');
     topUpReceiverRequired = this.page.locator('#error_widget_1_topup_receiver');
     topUpAmountInput = this.page.locator('#widget_1_topup_amount');

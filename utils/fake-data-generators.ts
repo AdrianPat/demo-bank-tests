@@ -91,3 +91,5 @@ export const generateIncorrectTopUpData = (generations: number, fileName: string
     );
     fs.writeFileSync(`${testDataDir}\\${fileName}`, JSON.stringify(testData, null, 4));
 };
+
+// TO DO: add generating incorrect test data for payment

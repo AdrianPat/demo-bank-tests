@@ -14,22 +14,20 @@ test.describe('Login', () => {
         loginPage = new LoginPage(page);
     });
 
-    test.describe('Successful', () => {
-        for (const d of correctLoginData) {
-            test(
-                `With correct data; id: ${d.id}`,
-                {
-                    tag: ['@login', '@smoke'],
-                    annotation: { type: 'Type', description: 'basic happy path' },
-                },
-                async ({ page }) => {
-                    await loginPage.login(d.userId, d.userPassword);
-                    const pulpitPage = new PulpitPage(page);
-                    await expect(pulpitPage.userNameText).toHaveText(str.userName);
-                },
-            );
-        }
-    });
+    for (const d of correctLoginData) {
+        test(
+            `Successful: with correct data; id: ${d.id}`,
+            {
+                tag: ['@login', '@smoke'],
+                annotation: { type: 'Type', description: 'basic happy path' },
+            },
+            async ({ page }) => {
+                await loginPage.login(d.userId, d.userPassword);
+                const pulpitPage = new PulpitPage(page);
+                await expect(pulpitPage.userNameText).toHaveText(str.userName);
+            },
+        );
+    }
 
     test.describe('Unsuccessful', () => {
         test('Without entering data', { tag: ['@login', '@unhappy_path'] }, async () => {

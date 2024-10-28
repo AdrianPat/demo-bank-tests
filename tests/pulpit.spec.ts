@@ -6,6 +6,8 @@ import { str } from '../strings/strings';
 import correctPaymentData from '../test-data/payment-correct-data.json';
 import correctTopUpData from '../test-data/top-up-correct-data.json';
 import incorrectTopUpData from '../test-data/top-up-incorrect-data.json';
+import paymentCorrectData from '../test-data/payment-correct-data.json';
+import paymentIncorrectData from '../test-data/payment-incorrect-data.json';
 
 test.describe('Pulpit tests', () => {
     let pulpitPage: PulpitPage;
@@ -24,6 +26,38 @@ test.describe('Pulpit tests', () => {
                 await expect(pulpitPage.messageText).toHaveText(
                     `${str.paymentDone} ${d.expectedTransferReceiver} - ${d.transferAmount},00PLN - ${d.transferTitle}`,
                 );
+            });
+        }
+
+        test('Unsuccessful: without entering data', async () => {
+            await pulpitPage.wykonajButton.click();
+            await expect(pulpitPage.transferReceiverRequired).toHaveText(str.requiredField);
+            await expect(pulpitPage.transferAmountError).toHaveText(str.requiredField);
+            await expect(pulpitPage.transferTitleRequired).toHaveText(str.requiredField);
+        });
+
+        for (const d of paymentCorrectData) {
+            test('Unsuccessful: without entering receiver', async () => {
+                await pulpitPage.tryToDoQuickPayment('', d.transferAmount, d.transferTitle);
+                await pulpitPage.wykonajButton.click();
+                await expect(pulpitPage.transferReceiverRequired).toHaveText(str.requiredField);
+            });
+
+            test('Unsuccessful: without entering amount', async () => {
+                await pulpitPage.tryToDoQuickPayment(d.receiverId, '', d.transferTitle);
+                await expect(pulpitPage.transferAmountError).toHaveText(str.requiredField);
+            });
+
+            test('Unsuccessful: without entering title', async () => {
+                await pulpitPage.tryToDoQuickPayment(d.receiverId, d.transferAmount, '');
+                await expect(pulpitPage.transferTitleRequired).toHaveText(str.requiredField);
+            });
+        }
+
+        for (const d of paymentIncorrectData) {
+            test('Unsuccessful: with too large amount', async () => {
+                await pulpitPage.tryToDoQuickPayment(d.receiverId, d.transferAmount, d.transferTitle);
+                await expect(pulpitPage.transferAmountError).toHaveText(str.amountOfPaymentTooLarge);
             });
         }
     });
@@ -87,7 +121,7 @@ test.describe('Pulpit tests', () => {
                 { tag: ['@payment', '@integration'] },
                 async () => {
                     await pulpitPage.tryToDoPhoneTopUp(d.receiverPhoneNumber, d.topUpAmount, true);
-                    await expect(pulpitPage.topUpAmountError).toHaveText(`${str.amountTooSmall} 5`);
+                    await expect(pulpitPage.topUpAmountError).toHaveText(`${str.amountOfTopUpTooSmall} 5`);
                 },
             );
         }
